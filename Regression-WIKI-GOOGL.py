@@ -6,6 +6,7 @@ import math
 import quandl
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn import preprocessing, svm
 from sklearn.model_selection import cross_validate
 from sklearn.linear_model import LinearRegression
@@ -53,6 +54,11 @@ def get_model(scores):
 # Predictinng x with the highest score model
 y_pred = get_model(scores).predict(x)
 
+# Making a Dataframe
+A = pd.DataFrame(y, columns = ['y'])
+B = pd.DataFrame(y_pred, columns = ['y_pred'])
+C = pd.concat([A, B], axis = 1, join = 'inner')
+
 # Plot
-plt.scatter(y, y_pred)
-plt.show()
+sns.scatterplot(data = C, x = "y" , y = "y_pred", hue = 'y')
+sns.lineplot(x = np.array([0,1200]), y = np.array([0, 1200]))
